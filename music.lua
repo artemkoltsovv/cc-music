@@ -6,6 +6,31 @@ if not speaker then
     return
 end
 
+local http = require("http")
+local fs = require("fs")
+
+-- Задайте URL для файла, который хотите скачать
+local url = "https://www.dropbox.com/scl/fi/li6nma3ayb4e62pqypgez/Prodigy-Diesel-Power.dfpwm?rlkey=8gu5uvhv8ycmsnnq5mhcxzqwz&st=dpib22l8&dl=0"
+
+-- Функция для скачивания файла
+local function downloadFile(url, filename)
+    local response = http.get(url)
+    if response then
+        local content = response.readAll()
+        fs.open(filename, "w").write(content)
+        print("Файл успешно загружен!")
+    else
+        print("Ошибка при скачивании файла.")
+    end
+end
+
+-- Скачиваем файл
+
+
+-- Здесь можно добавить код для обработки файла или работы с ним
+-- Но для воспроизведения звука потребуются сторонние программы или устройства
+
+
 -- Функция для воспроизведения аудиофайла
 local function playAudio(filename)
     if not fs.exists(filename) then
@@ -33,6 +58,7 @@ local function playAudio(filename)
     end
 end
 
+downloadFile(url, "music.dfpwm")
 -- Имя файла, который нужно воспроизвести
 local musicFile = "music.dfpwm"
 
