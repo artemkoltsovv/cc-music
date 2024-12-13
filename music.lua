@@ -17,12 +17,13 @@ local function playAudio(filename)
     local audioData = file.readAll()
     file.close()
 
+    local decoder = assert(audio.dfpwm.make_decoder())
+
     for _, peripheralName in ipairs(peripheral.getNames()) do
         if peripheral.getType(peripheralName) == "speaker" then
             local speakerPeripheral = peripheral.wrap(peripheralName)
-            local decoder = assert(audio.dfpwm.make_decoder())
 
-            for chunk in decoder(audioData, 16 * 1024) do
+            for chunk in decoder(audioData) do
                 speakerPeripheral.playAudio(chunk)
                 os.sleep(0) -- Пауза, чтобы колонки успевали обрабатывать данные
             end
